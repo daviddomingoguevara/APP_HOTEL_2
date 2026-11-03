@@ -4,12 +4,9 @@
 # Carpeta de compilación de Java (se descarta al clonar el repositorio o hacer clean)
 target/
 
-# Archivos JSONL generados durante la ejecución de pruebas con participantes reales
+# Archivos JSONL generados durante la ejecución de pruebas con participantes reales (solo después de la primera corrida)
 dados/pruebas.jsonl
 dados/participantes.jsonl
-
-# Carpeta de scripts PowerShell (a petición tuya, no subida al repositorio)
-scripts/
 
 # Fichero de registro de pruebas técnicas (creado durante el desarrollo/debugging)
 evidencias/registro-pruebas-tecnicas.csv
