@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instrucciones del experimento de usabilidad del Hotel Sol: registra tu código anónimo, realiza la tarea en las dos aplicaciones JavaFX y consulta tus resultados.">
+    <meta name="theme-color" content="#0e2a3d">
+    <title>Instrucciones · Experimento de usabilidad Hotel Sol</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/metrics.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body data-page="instrucciones">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Hotel Sol, inicio">
+            <img src="assets/logo.svg" alt="" width="42" height="42">
+            <span>
+                <strong>Hotel Sol</strong>
+                <small>Experimento de usabilidad · DAM</small>
+            </span>
+        </a>
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="index.html" data-nav="inicio">Inicio</a>
+            <a href="instrucciones.html" data-nav="instrucciones">Instrucciones</a>
+            <a href="resultados.html" data-nav="resultados">Resultados</a>
+            <span class="api-chip" data-api-status data-state="loading" role="status">Comprobando servidor…</span>
+        </nav>
+    </div>
+</header>
+
+<main id="contenido">
+    <div class="container">
+
+        <div class="section-head">
+            <p class="eyebrow">Guía de la prueba</p>
+            <h1>Instrucciones para participar</h1>
+            <p class="lead">
+                Vas a usar dos aplicaciones de gestión hotelera y a realizar exactamente la misma tarea en ambas.
+                No hay respuestas correctas ni incorrectas como persona: evaluamos las interfaces, no tu capacidad.
+            </p>
+        </div>
+
+        <div class="split">
+            <aside class="sticky-aside" aria-label="Índice de la página">
+                <div class="card card-flat">
+                    <h3 class="small mb-1">En esta página</h3>
+                    <ul class="toc">
+                        <li><a href="#usabilidad">Qué es la usabilidad</a></li>
+                        <li><a href="#registro">1. Regístrate</a></li>
+                        <li><a href="#preparar">2. Prepara las aplicaciones</a></li>
+                        <li><a href="#tarea">3. Realiza la tarea</a></li>
+                        <li><a href="#errores">Qué se considera un error</a></li>
+                        <li><a href="#metricas">Qué se registra</a></li>
+                        <li><a href="#despues">4. Consulta tus resultados</a></li>
+                        <li><a href="#faq">Preguntas frecuentes</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <div>
+                <section class="section" id="usabilidad" aria-labelledby="usabilidad-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Contexto</p>
+                        <h2 id="usabilidad-titulo">Qué es la usabilidad y qué evaluamos</h2>
+                    </div>
+                    <div class="card">
+                        <p>
+                            La <strong>usabilidad</strong> es el grado en que una persona puede usar una aplicación
+                            para conseguir un objetivo concreto de forma <strong>eficaz</strong> (lo consigue),
+                            <strong>eficiente</strong> (con pocos pasos, errores y tiempo) y
+                            <strong>satisfactoria</strong> (sin frustración).
+                        </p>
+                        <p class="mb-0">
+                            En este experimento comparamos dos interfaces que hacen lo mismo: buscar una habitación
+                            por su número y comprobar su estado. La versión A es la interfaz básica original.
+                            La versión B incorpora mejoras de jerarquía visual, feedback, accesibilidad y prevención
+                            de errores. Queremos comprobar si esas mejoras se traducen en diferencias medibles.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="section" id="registro" aria-labelledby="registro-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Paso 1</p>
+                        <h2 id="registro-titulo">Obtén tu código anónimo y tu orden de pruebas</h2>
+                        <p>
+                            Usa un código inventado de entre 2 y 20 caracteres (letras, números, guion o guion bajo).
+                            No escribas tu nombre, tu correo ni ningún dato personal. El mismo código se utilizará
+                            en las dos aplicaciones.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-2" style="align-items:start;">
+                        <div class="card">
+                            <form id="registro-form" novalidate>
+                                <div class="field">
+                                    <label for="participante-id">Código anónimo de participante</label>
+                                    <input id="participante-id" name="participanteId" type="text"
+                                           maxlength="20" pattern="[A-Za-z0-9_-]{2,20}" autocomplete="off"
+                                           spellcheck="false" required aria-describedby="id-hint"
+                                           placeholder="Ejemplo: P01">
+                                    <span class="hint" id="id-hint">
+                                        Entre 2 y 20 caracteres. Ejemplos: P01, clase-07, grupoA3.
+                                    </span>
+                                    <button id="usar-codigo-guardado" class="btn btn-ghost btn-sm mt-1"
+                                            type="button" hidden></button>
+                                </div>
+                                <label class="checkbox mb-2">
+                                    <input id="consentimiento" type="checkbox" required>
+                                    <span>
+                                        He leído las instrucciones y acepto participar de forma anónima.
+                                        Entiendo que se registrarán tiempos, búsquedas y errores con fines educativos.
+                                    </span>
+                                </label>
+                                <p class="field-error" id="registro-error" role="alert" hidden></p>
+                                <button class="btn btn-primary btn-block" id="registro-btn" type="submit">
+                                    Obtener mi código y orden
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="card-soft">
+                            <h3>Qué ocurre al registrarte</h3>
+                            <ul class="checklist">
+                                <li>Se te asigna un <strong>orden de pruebas equilibrado</strong>: unas personas empiezan por A y otras por B.</li>
+                                <li>Así evitamos que todo el mundo aprenda primero con la misma interfaz.</li>
+                                <li>El código es la única identificación que se guarda.</li>
+                                <li>Puedes repetir la consulta de resultados cuando quieras.</li>
+                            </ul>
+                            <p class="small muted mb-0 mt-2">
+                                Si ya te habías registrado antes, escribe el mismo código: se recuperará tu orden.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="registro-resultado" class="card mt-3" hidden aria-live="polite">
+                        <p class="eyebrow mb-1">Tu asignación</p>
+                        <div class="grid grid-2" style="align-items:center;">
+                            <div>
+                                <p class="small muted mb-1">Código anónimo</p>
+                                <p style="font-size:1.9rem;font-weight:800;margin:0;color:var(--navy);" id="asignacion-codigo">—</p>
+                                <button class="btn btn-secondary btn-sm mt-1" type="button" data-copy="#asignacion-codigo">
+                                    Copiar código
+                                </button>
+                            </div>
+                            <div>
+                                <p class="small muted mb-1">Orden asignado</p>
+                                <p style="font-size:1.9rem;font-weight:800;margin:0;color:var(--brand-dark);" id="asignacion-orden">—</p>
+                            </div>
+                        </div>
+                        <p class="mt-2 mb-1" id="asignacion-grupo"></p>
+                        <p class="small muted" id="asignacion-modo"></p>
+                        <div class="alert alert-warning" id="asignacion-aviso" hidden></div>
+                        <div class="alert alert-info">
+                            <h3>Qué hacer ahora</h3>
+                            <ol class="mb-0">
+                                <li>Comprueba que el servidor local está encendido (ver el paso 2).</li>
+                                <li>Abre primero la aplicación que indica tu orden con <code id="asignacion-primera-app">.\scripts\ejecutar-basica.ps1</code>.</li>
+                                <li>Cuando la aplicación pida el código, escribe el que aparece arriba.</li>
+                                <li>Realiza la tarea, finaliza y repite con la otra versión usando el mismo código.</li>
+                            </ol>
+                        </div>
+                        <div class="toolbar">
+                            <button class="btn btn-primary" id="btn-comprobar" type="button">Comprobar mi progreso</button>
+                            <a class="btn btn-secondary" href="resultados.html">Ver resultados generales</a>
+                            <a class="btn btn-ghost" id="enlace-resultados" href="resultados.html" hidden>Ver mis resultados</a>
+                        </div>
+                        <div id="progreso-resultado" class="card-soft mt-2" hidden aria-live="polite"></div>
+                    </div>
+                </section>
+
+                <section class="section" id="preparar" aria-labelledby="preparar-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Paso 2</p>
+                        <h2 id="preparar-titulo">Prepara el servidor y las aplicaciones</h2>
+                        <p>
+                            Las aplicaciones son de escritorio (JavaFX) y no se pueden abrir desde el navegador por
+                            seguridad. Sigue estos pasos en el ordenador del aula o en el tuyo.
+                        </p>
+                    </div>
+
+                    <div class="callout mb-3">
+                        <strong>Importante:</strong> abre la carpeta <code>TRABAJO 2</code> en PowerShell.
+                        Los comandos siguientes se ejecutan desde ahí. La primera vez, Maven se descarga
+                        automáticamente si no está instalado.
+                    </div>
+
+                    <ol>
+                        <li class="mb-2">
+                            <strong>Inicia el servidor de métricas</strong> (déjalo abierto durante toda la prueba):
+                            <div class="codeblock mt-1">
+                                <button class="copy-btn" type="button" data-copy-text=".\scripts\iniciar-servidor.ps1">Copiar</button>
+                                <code>.\scripts\iniciar-servidor.ps1</code>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Abre la primera aplicación</strong> según el orden que se te ha asignado:
+                            <div class="codeblock mt-1">
+                                <button class="copy-btn" type="button" data-copy-text=".\scripts\ejecutar-basica.ps1&#10;.\scripts\ejecutar-mejorada.ps1">Copiar</button>
+                                <code># Versión A (básica)
+.\scripts\ejecutar-basica.ps1
+
+# Versión B (mejorada)
+.\scripts\ejecutar-mejorada.ps1</code>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Escribe tu código anónimo</strong> en la ventana que aparece al abrir la aplicación
+                            y pulsa <em>Comenzar prueba</em>.
+                        </li>
+                        <li class="mb-2">
+                            <strong>Realiza la tarea</strong> y pulsa el botón de finalizar cuando hayas comprobado
+                            el estado de la habitación. Después, cierra la aplicación.
+                        </li>
+                        <li>
+                            <strong>Repite con la otra versión</strong> usando exactamente el mismo código.
+                        </li>
+                    </ol>
+
+                    <details class="settings">
+                        <summary>¿Y si el servidor no arranca o no hay conexión?</summary>
+                        <p class="small mb-1">
+                            La prueba puede realizarse igualmente. Si el servidor no está disponible, cada aplicación
+                            guarda el resultado en un CSV local:
+                        </p>
+                        <div class="codeblock">
+                            <code>%USERPROFILE%\.trabajo2-usabilidad\resultados-locales.csv</code>
+                        </div>
+                        <p class="small mt-2 mb-0">
+                            Después puedes importar ese archivo desde la página de resultados con el botón
+                            <strong>Importar CSV</strong>. Si el servidor está encendido, la importación puede subir
+                            las pruebas para que todo el mundo las vea.
+                        </p>
+                    </details>
+                </section>
+
+                <section class="section" id="tarea" aria-labelledby="tarea-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Paso 3</p>
+                        <h2 id="tarea-titulo">La tarea</h2>
+                    </div>
+                    <div class="alert alert-info">
+                        <h3>Encuentra la habitación 103 y comprueba si está disponible.</h3>
+                        <p class="mb-0">
+                            Realiza esta misma tarea en las dos versiones. Cuando hayas consultado el estado de la
+                            habitación, pulsa el botón para finalizar la prueba. No cierres la ventana antes de
+                            terminar: se registraría como abandono.
+                        </p>
+                    </div>
+                    <div class="grid grid-3">
+                        <div class="card-soft">
+                            <h3 class="small">Empieza por el inicio</h3>
+                            <p class="small mb-0">Explora la aplicación como lo harías normalmente. No hay una ruta obligatoria.</p>
+                        </div>
+                        <div class="card-soft">
+                            <h3 class="small">Busca la habitación</h3>
+                            <p class="small mb-0">Introduce el número en el buscador y consulta la información que aparece.</p>
+                        </div>
+                        <div class="card-soft">
+                            <h3 class="small">Finaliza al comprobar</h3>
+                            <p class="small mb-0">Cuando tengas claro si está disponible, pulsa el botón de finalizar.</p>
+                        </div>
+                    </div>
+                    <p class="small muted mt-3 mb-0">
+                        <strong>Criterio de éxito:</strong> se considera que la tarea se completa correctamente cuando
+                        la persona localiza la habitación 103 y finaliza la prueba después de consultar su estado.
+                        Las pruebas cerradas sin finalizar, las abandonadas y las que no localizan la habitación
+                        <strong>no</strong> cuentan como éxito.
+                    </p>
+                </section>
+
+                <section class="section" id="errores" aria-labelledby="errores-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Reglas</p>
+                        <h2 id="errores-titulo">Qué se considera un error</h2>
+                    </div>
+                    <div class="card">
+                        <ul class="mb-0">
+                            <li>Introducir un número de habitación incorrecto.</li>
+                            <li>Buscar una habitación que no existe.</li>
+                            <li>Realizar una búsqueda que no permite completar la tarea (por ejemplo, una habitación distinta de la indicada).</li>
+                            <li>Intentar finalizar sin haber encontrado la habitación 103.</li>
+                        </ul>
+                    </div>
+                    <p class="small muted mt-2 mb-0">
+                        No se cuenta como error cada pulsación de tecla. Solo se registran las acciones de búsqueda
+                        y los intentos de finalización. Escribir despacio o mirar la pantalla no penaliza.
+                    </p>
+                </section>
+
+                <section class="section" id="metricas" aria-labelledby="metricas-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Datos</p>
+                        <h2 id="metricas-titulo">Qué se registra automáticamente</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <caption class="print-only">Métricas registradas por la aplicación</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Dato</th>
+                                    <th scope="col">Para qué sirve</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Tiempo de búsqueda</th>
+                                    <td>Segundos desde que empiezas hasta que finalizas correctamente. Se usa un reloj monótono.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Número de búsquedas</th>
+                                    <td>Eficiencia: cuántos intentos necesitas para completar la tarea.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Errores</th>
+                                    <td>Búsquedas incorrectas e intentos de finalizar sin haber encontrado la habitación.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Tiempo hasta el primer error</th>
+                                    <td>Cuánto tarda en aparecer la primera dificultad.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Tiempo de recuperación</th>
+                                    <td>Cuánto tarda la persona en volver a una acción correcta después de un error.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Estado final</th>
+                                    <td>Completada, abandonada o incompleta. Las dos últimas no cuentan como éxito.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="small muted mt-2 mb-0">
+                        También se guarda la versión, el orden de las pruebas, la fecha y un identificador técnico.
+                        No se recoge el contenido de las pulsaciones de teclado ni datos personales.
+                    </p>
+                </section>
+
+                <section class="section" id="despues" aria-labelledby="despues-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Paso 4</p>
+                        <h2 id="despues-titulo">Consulta tus resultados y los de la clase</h2>
+                        <p>
+                            Cuando termines las dos versiones, pulsa <strong>Comprobar mi progreso</strong> en tu
+                            asignación o abre la página de resultados. Las métricas se actualizan automáticamente
+                            con cada nueva prueba: no hay una cantidad fija de participantes.
+                        </p>
+                    </div>
+                    <div class="toolbar">
+                        <a class="btn btn-primary" href="resultados.html">Ir a resultados</a>
+                        <a class="btn btn-secondary" href="index.html">Volver al inicio</a>
+                    </div>
+                </section>
+
+                <section class="section" id="faq" aria-labelledby="faq-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Dudas</p>
+                        <h2 id="faq-titulo">Preguntas frecuentes</h2>
+                    </div>
+
+                    <details class="settings">
+                        <summary>¿Puedo hacer las pruebas en el orden que quiera?</summary>
+                        <p class="mb-0">
+                            No. El orden se asigna de forma equilibrada para evitar que el aprendizaje favorezca
+                            siempre a la misma versión. Respeta el orden que aparece tras el registro.
+                        </p>
+                    </details>
+                    <details class="settings">
+                        <summary>¿Puedo repetir la prueba si me equivoco?</summary>
+                        <p class="mb-0">
+                            La primera prueba válida es la que cuenta. Si cierras una aplicación por accidente,
+                            se registrará como abandono. Si necesitas repetir por un problema técnico, avisa al
+                            profesor y usa un código nuevo.
+                        </p>
+                    </details>
+                    <details class="settings">
+                        <summary>¿Se guarda mi nombre o mi correo?</summary>
+                        <p class="mb-0">
+                            No. Solo se guarda el código anónimo que eliges. No introduzcas datos personales en el
+                            código ni en las observaciones.
+                        </p>
+                    </details>
+                    <details class="settings">
+                        <summary>¿Qué hago si el servidor no está encendido?</summary>
+                        <p class="mb-0">
+                            Puedes hacer la prueba igualmente: las aplicaciones guardarán un CSV local. Después
+                            impórtalo desde la página de resultados. Para que las métricas se compartan en clase,
+                            lo ideal es encender el servidor antes de empezar.
+                        </p>
+                    </details>
+                    <details class="settings">
+                        <summary>¿La interfaz más rápida es siempre la mejor?</summary>
+                        <p class="mb-0">
+                            No. También importan los errores, la tasa de éxito, la accesibilidad, la claridad y la
+                            comodidad. En la memoria y en la página de resultados se analiza esta cuestión con los
+                            datos disponibles.
+                        </p>
+                    </details>
+                </section>
+
+                <section class="section" aria-labelledby="conexion-titulo">
+                    <div class="section-head">
+                        <p class="eyebrow">Configuración</p>
+                        <h2 id="conexion-titulo">Conexión con el servidor</h2>
+                        <p class="small">
+                            Normalmente no necesitas tocar esto. Si el servidor se ejecuta en otro equipo o puerto,
+                            indica aquí su dirección. La dirección vacía significa «mismo origen».
+                        </p>
+                    </div>
+                    <form data-api-settings class="card">
+                        <div class="field">
+                            <label for="api-base">Dirección del servidor de métricas</label>
+                            <input id="api-base" name="apiBase" type="url" placeholder="http://localhost:8080" autocomplete="off">
+                            <span class="hint">Ejemplo: <code>http://192.168.1.40:8080</code>. Guarda y recarga la página.</span>
+                        </div>
+                        <div class="toolbar">
+                            <button class="btn btn-secondary" type="button" data-api-test>Probar conexión</button>
+                            <button class="btn btn-primary" type="button" data-api-save>Guardar dirección</button>
+                            <button class="btn btn-ghost" type="button" data-api-local>Usar localhost:8080</button>
+                        </div>
+                        <p class="small mt-2 mb-0" data-api-result role="status"></p>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>
+            <strong>Trabajo 2 · Usabilidad y métricas</strong><br>
+            Proyecto académico de Desarrollo de Interfaces (DAM). Datos anónimos y uso exclusivamente educativo.
+        </p>
+        <p>
+            <a href="index.html">Inicio</a> ·
+            <a href="resultados.html">Resultados</a> ·
+            <span id="anio"></span>
+        </p>
+    </div>
+</footer>
+</body>
+</html>

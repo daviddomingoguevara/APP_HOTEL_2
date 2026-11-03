@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="es.dam.hotelsol.basica.controller.MainController"
+            styleClass="raiz">
+    <left>
+        <VBox prefWidth="220" styleClass="barra-lateral">
+            <padding>
+                <Insets top="24" right="14" bottom="18" left="14"/>
+            </padding>
+            <Label text="HOTEL SOL" styleClass="logo"/>
+            <Label text="Gestion hotelera" styleClass="subtitulo-lateral"/>
+            <Region prefHeight="28"/>
+            <Button fx:id="navInicio" text="Inicio" maxWidth="Infinity"
+                    onAction="#mostrarInicio" styleClass="nav-button"/>
+            <Button fx:id="navHabitaciones" text="Habitaciones" maxWidth="Infinity"
+                    onAction="#mostrarHabitaciones" styleClass="nav-button"/>
+            <Button fx:id="navReservas" text="Reservas" maxWidth="Infinity"
+                    onAction="#mostrarReservas" styleClass="nav-button"/>
+            <Button fx:id="navUsuarios" text="Usuarios" maxWidth="Infinity"
+                    onAction="#mostrarUsuarios" styleClass="nav-button"/>
+            <Button fx:id="navConfiguracion" text="Configuracion" maxWidth="Infinity"
+                    onAction="#mostrarConfiguracion" styleClass="nav-button"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label fx:id="lblParticipante" text="Participante: -" styleClass="texto-lateral"/>
+            <Label text="Version A - Basica" styleClass="texto-lateral"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane alignment="TOP_LEFT" styleClass="contenido">
+
+            <VBox fx:id="seccionInicio" styleClass="seccion" maxWidth="800">
+                <Label text="Inicio" styleClass="titulo"/>
+                <Label text="Bienvenido a Hotel Sol" styleClass="subtitulo"/>
+                <Label text="Esta aplicacion permite consultar la informacion del hotel y sus habitaciones."
+                       wrapText="true" styleClass="texto"/>
+                <Separator/>
+                <Label text="Utiliza el menu lateral para acceder a las diferentes secciones."
+                       wrapText="true" styleClass="texto"/>
+                <Label text="Para buscar una habitacion, abre la seccion Habitaciones."
+                       wrapText="true" styleClass="texto"/>
+            </VBox>
+
+            <VBox fx:id="seccionHabitaciones" styleClass="seccion" visible="false" managed="false" maxWidth="820">
+                <Label text="Habitaciones" styleClass="titulo"/>
+                <Label text="Buscar habitacion" styleClass="subtitulo"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Numero:"/>
+                    <TextField fx:id="campoNumero" prefWidth="150" promptText="Numero de habitacion"/>
+                    <Button text="Buscar" onAction="#buscar" styleClass="boton-principal"/>
+                </HBox>
+                <VBox styleClass="tarjeta">
+                    <Label text="Resultado" styleClass="titulo-tarjeta"/>
+                    <Label fx:id="lblMensajeResultado" wrapText="true" styleClass="mensaje-resultado"/>
+                    <Label fx:id="lblDetalleHabitacion" wrapText="true" styleClass="detalle"/>
+                </VBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="botonFinalizar" text="Finalizar prueba" onAction="#finalizar"
+                            styleClass="boton-secundario"/>
+                </HBox>
+                <Label fx:id="lblRegistro" wrapText="true" styleClass="texto-pequeno"/>
+            </VBox>
+
+            <VBox fx:id="seccionReservas" styleClass="seccion" visible="false" managed="false">
+                <Label text="Reservas" styleClass="titulo"/>
+                <Label text="Reservas registradas en el hotel" styleClass="subtitulo"/>
+                <TableView fx:id="tablaReservas" VBox.vgrow="ALWAYS" prefHeight="430">
+                    <columns>
+                        <TableColumn fx:id="colReservaCodigo" text="Codigo" prefWidth="90"/>
+                        <TableColumn fx:id="colReservaCliente" text="Cliente" prefWidth="180"/>
+                        <TableColumn fx:id="colReservaHabitacion" text="Habitacion" prefWidth="100"/>
+                        <TableColumn fx:id="colReservaEntrada" text="Entrada" prefWidth="110"/>
+                        <TableColumn fx:id="colReservaSalida" text="Salida" prefWidth="110"/>
+                        <TableColumn fx:id="colReservaEstado" text="Estado" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <VBox fx:id="seccionUsuarios" styleClass="seccion" visible="false" managed="false">
+                <Label text="Usuarios" styleClass="titulo"/>
+                <Label text="Clientes con reservas en el hotel" styleClass="subtitulo"/>
+                <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS" prefHeight="430">
+                    <columns>
+                        <TableColumn fx:id="colClienteNombre" text="Nombre" prefWidth="240"/>
+                        <TableColumn fx:id="colClienteEmail" text="Correo electronico" prefWidth="300"/>
+                        <TableColumn fx:id="colClienteReservas" text="Reservas" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <VBox fx:id="seccionConfiguracion" styleClass="seccion" visible="false" managed="false" maxWidth="760">
+                <Label text="Configuracion" styleClass="titulo"/>
+                <Label text="Datos del establecimiento" styleClass="subtitulo"/>
+                <GridPane hgap="20" vgap="12" styleClass="tarjeta">
+                    <Label text="Nombre" styleClass="etiqueta-config" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Categoria" styleClass="etiqueta-config" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelCategoria" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Ciudad" styleClass="etiqueta-config" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelCiudad" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Direccion" styleClass="etiqueta-config" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelDireccion" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Telefono" styleClass="etiqueta-config" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelTelefono" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Fecha de los datos" styleClass="etiqueta-config" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblHotelFecha" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
+
+        </StackPane>
+    </center>
+</BorderPane>

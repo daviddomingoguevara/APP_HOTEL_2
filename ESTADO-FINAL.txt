@@ -1,0 +1,61 @@
+TRABAJO 2 · Estado final · 03-11-2026
+
+=== APLICACIONES JAVAFX ===
+- aplicacion-basica (Version A - basica): BUILD SUCCESS, lanza y grava metrics
+- aplicacion-mejorada (Version B - mejorada): BUILD SUCCESS (fix fx:id seccionInicio), lanza y grava metrics iguales que A
+
+=== TESTS ===
+- 8 tests JUnit por aplicacion (DAO + SesionPrueba)
+- 16 tests en total, 0 fallos
+
+=== SERVIDOR METRICS ===
+- ServidorMetricas.java en puerto 8080
+- APIs: GET /api/salud, GET/POST /api/participantes, GET/POST /api/pruebas
+- CORS habilitado
+- Participante orders alternan A-B/B-A automatico
+- Persistencia: datos/pruebas.jsonl + datos/participantes.jsonl
+- Modo offline: CSV local %USERPROFILE%\.trabajo2-usabilidad\resultados-locales.csv (ahora limpio, sin datos tecnicos)
+
+=== WEB (GitHub Pages) ===
+- index.html, instrucciones.html, resultados.html
+- Registro anonimo, orden equilibrado A-B/B-A
+- Charts a partir de datos reales recibidos
+- CSV import/export funcional
+- Modo demo con aviso "DATOS FICTICIOS" y IDs EJEMPLO-*
+- Fallback localStorage + CSV import si servidor no disponible
+
+=== DOCS ===
+- TRABAJO 2/README.md: comandos PowerShell completos
+- TRABAJO 2/memoria/memoria.md: memoria completa en espanol, con secciones "pendiente" y warnings de datos ficticios
+- TRABAJO 2/metodologia.md: diseno A/B, distribucion ordenes, metricas, apps, web
+- TRABAJO 2/memoria/resultados.md: plantilla de resultados con formulas y datos de ejemplo ficticios EJEMPLO-
+- TRABAJO 2/memoria/guion-presentacion.md: guion 10-12 slides para exposicion en clase
+- presentacion.md (workspace root): prompt de Gemini enfocado en explicacion en clase, sin backend
+
+=== EVIDENCIAS ===
+- evidencias/capturas/: captures limpias de dialogo, busqueda, resultado, completada de ambas apps
+- CSV demo en datos/ejemplo-resultados.csv y web/assets/ejemplo-resultados.csv (7 participantes ficticios, 14 tests)
+- Node validation: A 41.58s/85.7%/1.14err; B 25.21s/100%/0.29err; mejora 39.4%
+- Removido: app-basica-habitaciones.txt con texto accidental PRUEBA-A1103
+
+=== ROOM 103 ===
+- Estado: Doble, ocupada, planta 1, accesible si
+- Criterio exito: localizar 103 y pulsar finalizar despues de consultar estado
+- Exito = localizar y verificar estado, no que este disponible
+- Documentado conflicto con nota "debe estar disponible"
+
+=== FORMULAS (web/js/metrics.js + memoria) ===
+- Media tiempo: medianas de duracionSeg de successes
+- Tasa exito: (exitos/total)*100 (abandonadas/incomplete !== success)
+- Errores: suma errores por prueba; errores/participante, errores/probar
+- Abandono: (abandonadas/total)*100
+- Eficiencia: (tasaExito/100)/mediaTiempo*100
+- Mejora relativa: (mediaTiempo_A - mediaTiempo_B)/mediaTiempo_A*100 (puede ser negativa, se muestra sin ocultar)
+- Mejora emparejada: media((A_i - B_i)/A_i*100) sobre participantes con ambas versiones
+- % sin errores: (exitos_sin_errores/total_exitos)*100
+
+=== PENDIENTE NOTADO ===
+- Sin experimento con participantes reales aun; datos de validacion = pruebas automaticas + CSV ficticio EJEMPLO-
+- Memoria/resultados como template, valores por llenar cuando haya datos de aula
+- Conclusiones cautelosas; no afirmar causalidad directa
+- Limitaciones: muestra pequena, room 103 ocupada, sin medida subjetiva, sin generalizar
