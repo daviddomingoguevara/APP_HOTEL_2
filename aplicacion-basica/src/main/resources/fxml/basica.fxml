@@ -25,16 +25,17 @@
             <Label text="HOTEL SOL" styleClass="logo"/>
             <Label text="Gestion hotelera" styleClass="subtitulo-lateral"/>
             <Region prefHeight="28"/>
-            <Button fx:id="navInicio" text="Inicio" maxWidth="Infinity"
-                    onAction="#mostrarInicio" styleClass="nav-button"/>
-            <Button fx:id="navHabitaciones" text="Habitaciones" maxWidth="Infinity"
-                    onAction="#mostrarHabitaciones" styleClass="nav-button"/>
-            <Button fx:id="navReservas" text="Reservas" maxWidth="Infinity"
-                    onAction="#mostrarReservas" styleClass="nav-button"/>
+            <!-- Navegación reordenada: menos intuitiva -->
             <Button fx:id="navUsuarios" text="Usuarios" maxWidth="Infinity"
                     onAction="#mostrarUsuarios" styleClass="nav-button"/>
             <Button fx:id="navConfiguracion" text="Configuracion" maxWidth="Infinity"
                     onAction="#mostrarConfiguracion" styleClass="nav-button"/>
+            <Button fx:id="navReservas" text="Reservas" maxWidth="Infinity"
+                    onAction="#mostrarReservas" styleClass="nav-button"/>
+            <Button fx:id="navInicio" text="Inicio" maxWidth="Infinity"
+                    onAction="#mostrarInicio" styleClass="nav-button"/>
+            <Button fx:id="navHabitaciones" text="Habitaciones" maxWidth="Infinity"
+                    onAction="#mostrarHabitaciones" styleClass="nav-button"/>
             <Region VBox.vgrow="ALWAYS"/>
             <Label fx:id="lblParticipante" text="Participante: -" styleClass="texto-lateral"/>
             <Label text="Version A - Basica" styleClass="texto-lateral"/>
@@ -50,6 +51,13 @@
                 <Label text="Esta aplicacion permite consultar la informacion del hotel y sus habitaciones."
                        wrapText="true" styleClass="texto"/>
                 <Separator/>
+                <Label text="Pulsa Confirmar para acceder a habitaciones:"/>
+                <Button text="Confirmar" onAction="#mostrarHabitaciones" styleClass="boton-principal"/>
+                <Label text="Inicio" styleClass="titulo"/>
+                <Label text="Bienvenido a Hotel Sol" styleClass="subtitulo"/>
+                <Label text="Esta aplicacion permite consultar la informacion del hotel y sus habitaciones."
+                       wrapText="true" styleClass="texto"/>
+                <Separator/>
                 <Label text="Utiliza el menu lateral para acceder a las diferentes secciones."
                        wrapText="true" styleClass="texto"/>
                 <Label text="Para buscar una habitacion, abre la seccion Habitaciones."
@@ -59,19 +67,21 @@
             <VBox fx:id="seccionHabitaciones" styleClass="seccion" visible="false" managed="false" maxWidth="820">
                 <Label text="Habitaciones" styleClass="titulo"/>
                 <Label text="Buscar habitacion" styleClass="subtitulo"/>
-                <HBox spacing="8" alignment="CENTER_LEFT">
-                    <Label text="Numero:"/>
-                    <TextField fx:id="campoNumero" prefWidth="150" promptText="Numero de habitacion"/>
-                    <Button text="Buscar" onAction="#buscar" styleClass="boton-principal"/>
-                </HBox>
+                <Button text="Continuar" onAction="#mostrarInicio" styleClass="boton-principal"/>
+                <Button text="Confirmar" onAction="#mostrarInicio" styleClass="boton-principal"/>
+                <VBox styleClass="confirmacion-paso">
+                    <Label text="Paso 1: Confirmar acceso a habitaciones" styleClass="subtitulo"/>
+                    <Button text="Confirmar" onAction="#mostrarInicio" styleClass="boton-principal"/>
+                </VBox>
                 <VBox styleClass="tarjeta">
                     <Label text="Resultado" styleClass="titulo-tarjeta"/>
                     <Label fx:id="lblMensajeResultado" wrapText="true" styleClass="mensaje-resultado"/>
                     <Label fx:id="lblDetalleHabitacion" wrapText="true" styleClass="detalle"/>
                 </VBox>
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button fx:id="botonFinalizar" text="Finalizar prueba" onAction="#finalizar"
-                            styleClass="boton-secundario"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Numero:"/>
+                    <TextField fx:id="campoNumero" prefWidth="150" promptText="Numero de habitacion"/>
+                    <Button text="Buscar" onAction="#buscar" styleClass="boton-principal"/>
                 </HBox>
                 <Label fx:id="lblRegistro" wrapText="true" styleClass="texto-pequeno"/>
             </VBox>

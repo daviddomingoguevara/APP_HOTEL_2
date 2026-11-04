@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experimento de usabilidad del Hotel Sol: compara una interfaz JavaFX básica con una interfaz mejorada para encontrar una habitación.">
+    <meta name="theme-color" content="#0e2a3d">
+    <title>Hotel Sol · Experimento de usabilidad · Trabajo 2</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body data-page="inicio">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Hotel Sol, inicio">
+            <img src="assets/logo.svg" alt="" width="42" height="42">
+            <span>
+                <strong>Hotel Sol</strong>
+                <small>Experimento de usabilidad · DAM</small>
+            </span>
+        </a>
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="index.html" data-nav="inicio">Inicio</a>
+            <a href="instrucciones.html" data-nav="instrucciones">Instrucciones</a>
+            <a href="resultados.html" data-nav="resultados">Resultados</a>
+            <span class="api-chip" data-api-status data-state="loading" role="status">Comprobando servidor…</span>
+        </nav>
+    </div>
+</header>
+
+<main id="contenido">
+    <div class="container">
+
+        <section class="hero" aria-labelledby="titulo-principal">
+            <div class="hero-grid">
+                <div>
+                    <p class="eyebrow">Trabajo 2 · Usabilidad y métricas</p>
+                    <h1 id="titulo-principal">¿Puede una interfaz mejor ayudarte a encontrar una habitación más rápido?</h1>
+                    <p>
+                        Dos aplicaciones JavaFX, la misma tarea y dos formas muy distintas de presentarla.
+                        Participa, busca una habitación y comprueba con datos reales qué interfaz funciona mejor
+                        para tus compañeros de clase.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="instrucciones.html#registro">Comenzar el experimento</a>
+                        <a class="btn btn-outline" href="resultados.html">Ver resultados</a>
+                    </div>
+                    <p class="hero-note">
+                        Participación anónima · Sin nombres, correos ni datos personales · Menos de 5 minutos
+                    </p>
+                </div>
+                <div class="mock-window" aria-hidden="true">
+                    <div class="mock-top">
+                        <span class="mock-dot"></span>
+                        <span class="mock-dot"></span>
+                        <span class="mock-dot"></span>
+                    </div>
+                    <div class="mock-body">
+                        <div class="mock-label">Número de habitación</div>
+                        <div class="mock-input">
+                            <span>112</span>
+                            <span class="mock-caret"></span>
+                        </div>
+                        <div class="mock-status">Habitación localizada</div>
+                        <span class="mock-badge">Disponible</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="como-funciona">
+            <div class="section-head">
+                <p class="eyebrow">El experimento en 30 segundos</p>
+                <h2 id="como-funciona">Una tarea, dos interfaces, métricas reales</h2>
+                <p>
+                    No es una demo con resultados inventados. Cada búsqueda se cronometra y cada error se registra
+                    en la aplicación JavaFX que estás usando.
+                </p>
+            </div>
+            <div class="steps">
+                <article class="step">
+                    <span class="step-number">1</span>
+                    <h3>Regístrate</h3>
+                    <p>Elige un código anónimo. La web te asignará el orden de las pruebas de forma equilibrada.</p>
+                </article>
+                <article class="step">
+                    <span class="step-number">2</span>
+                    <h3>Haz la tarea</h3>
+                    <p>Abre las dos aplicaciones JavaFX y busca la habitación 103 en cada una de ellas.</p>
+                </article>
+                <article class="step">
+                    <span class="step-number">3</span>
+                    <h3>Se registra solo</h3>
+                    <p>La aplicación mide tiempo, búsquedas y errores. Tú no tienes que apuntar nada.</p>
+                </article>
+                <article class="step">
+                    <span class="step-number">4</span>
+                    <h3>Compara</h3>
+                    <p>Consulta tu progreso y los resultados agregados de toda la clase en la página de resultados.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="interfaces">
+            <div class="section-head">
+                <p class="eyebrow">Las dos versiones</p>
+                <h2 id="interfaces">Mismos datos, misma tarea, distinta experiencia</h2>
+                <p>
+                    Las dos aplicaciones usan el mismo fichero XML, la misma habitación objetivo y el mismo criterio
+                    de éxito. La única diferencia es cómo se presenta la información y cómo se ayuda a la persona.
+                </p>
+            </div>
+            <div class="grid grid-2">
+                <article class="card version-card version-a">
+                    <span class="version-label">Versión A · Básica</span>
+                    <h3>Interfaz inicial</h3>
+                    <p class="muted">La aplicación creada al principio del proyecto, sin ayudas específicas de usabilidad.</p>
+                    <ul class="feature-list neutral">
+                        <li>Menú lateral y formulario sencillo.</li>
+                        <li>Hay que interpretar los resultados sin mensajes guiados.</li>
+                        <li>Sin validación previa ni foco inicial en el buscador.</li>
+                        <li>Los errores se muestran como texto plano.</li>
+                    </ul>
+                    <div class="tag-list">
+                        <span class="tag">JavaFX</span>
+                        <span class="tag">FXML</span>
+                        <span class="tag">CSS</span>
+                    </div>
+                </article>
+                <article class="card version-card version-b">
+                    <span class="version-label">Versión B · Mejorada</span>
+                    <h3>Interfaz con mejoras de usabilidad</h3>
+                    <p class="muted">La propuesta que aplica lo aprendido sobre jerarquía, feedback, accesibilidad y prevención de errores.</p>
+                    <ul class="feature-list">
+                        <li>Buscador destacado, etiqueta clara y ayuda contextual.</li>
+                        <li>Validación, búsqueda con Enter y sugerencias de números.</li>
+                        <li>Estados diferenciados con texto e iconos, sin depender solo del color.</li>
+                        <li>Foco visible, navegación por teclado y mensajes accesibles.</li>
+                    </ul>
+                    <div class="tag-list">
+                        <span class="tag">JavaFX</span>
+                        <span class="tag">FXML</span>
+                        <span class="tag">Accesibilidad</span>
+                        <span class="tag">Feedback</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="metricas">
+            <div class="section-head">
+                <p class="eyebrow">Lo que medimos</p>
+                <h2 id="metricas">Métricas que no se pueden maquillar</h2>
+                <p>
+                    El cronómetro empieza cuando comienzas la tarea y se detiene al completarla correctamente.
+                    No se mide el tiempo de lectura de las instrucciones.
+                </p>
+            </div>
+            <div class="grid grid-4">
+                <article class="kpi">
+                    <div class="kpi-label">Tiempo medio</div>
+                    <div class="kpi-value">s</div>
+                    <p class="kpi-note">Segundos hasta localizar la habitación y finalizar.</p>
+                </article>
+                <article class="kpi">
+                    <div class="kpi-label">Tasa de éxito</div>
+                    <div class="kpi-value">%</div>
+                    <p class="kpi-note">Pruebas completadas correctamente sobre pruebas iniciadas.</p>
+                </article>
+                <article class="kpi">
+                    <div class="kpi-label">Errores</div>
+                    <div class="kpi-value">n</div>
+                    <p class="kpi-note">Búsquedas incorrectas o intentos de finalizar sin haber encontrado la habitación.</p>
+                </article>
+                <article class="kpi">
+                    <div class="kpi-label">Abandono</div>
+                    <div class="kpi-value">%</div>
+                    <p class="kpi-note">Pruebas que se cierran sin completar la tarea.</p>
+                </article>
+            </div>
+            <p class="small muted mt-2">
+                También se calculan la eficiencia, el tiempo hasta el primer error, el tiempo de recuperación,
+                el porcentaje de personas sin errores y la mejora relativa entre versiones.
+            </p>
+        </section>
+
+        <section class="section" aria-labelledby="anonimato">
+            <div class="alert alert-info">
+                <h3>Anonimato y uso responsable</h3>
+                <p class="mb-0">
+                    Solo se guarda un código anónimo, la versión utilizada, los tiempos, las búsquedas y los errores.
+                    No se recogen nombres, correos, direcciones ni ninguna información personal. Los datos se usan
+                    únicamente para el trabajo académico de la asignatura.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="empezar">
+            <div class="card" style="background: linear-gradient(135deg, #ffffff, #eef6f2); border-color: #b9e1d0;">
+                <div class="grid grid-2" style="align-items:center;">
+                    <div>
+                        <p class="eyebrow">¿Te animas?</p>
+                        <h2 id="empezar" class="mb-1">Tu prueba cuenta de verdad</h2>
+                        <p class="mb-0">
+                            Necesitamos compañeros reales, no datos de ejemplo. Lee las instrucciones, obtén tu código
+                            y realiza la tarea en las dos aplicaciones.
+                        </p>
+                    </div>
+                    <div class="toolbar" style="justify-content:flex-end;">
+                        <a class="btn btn-primary" href="instrucciones.html#registro">Empezar ahora</a>
+                        <a class="btn btn-secondary" href="resultados.html">Consultar resultados</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>
+            <strong>Trabajo 2 · Usabilidad y métricas</strong><br>
+            Proyecto académico de Desarrollo de Interfaces (DAM). Datos anónimos y uso exclusivamente educativo.
+        </p>
+        <p>
+            <a href="instrucciones.html">Instrucciones</a> ·
+            <a href="resultados.html">Resultados</a> ·
+            <span id="anio"></span>
+        </p>
+    </div>
+</footer>
+</body>
+</html>

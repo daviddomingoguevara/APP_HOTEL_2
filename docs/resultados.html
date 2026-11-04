@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resultados agregados del experimento de usabilidad del Hotel Sol: tiempos, éxito, errores, abandono, eficiencia y comparación entre las versiones A y B.">
+    <meta name="theme-color" content="#0e2a3d">
+    <title>Resultados · Experimento de usabilidad Hotel Sol</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/api.js" defer></script>
+    <script src="js/metrics.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/results.js" defer></script>
+</head>
+<body data-page="resultados">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Hotel Sol, inicio">
+            <img src="assets/logo.svg" alt="" width="42" height="42">
+            <span>
+                <strong>Hotel Sol</strong>
+                <small>Experimento de usabilidad · DAM</small>
+            </span>
+        </a>
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="index.html" data-nav="inicio">Inicio</a>
+            <a href="instrucciones.html" data-nav="instrucciones">Instrucciones</a>
+            <a href="resultados.html" data-nav="resultados">Resultados</a>
+            <span class="api-chip" data-api-status data-state="loading" role="status">Comprobando servidor…</span>
+        </nav>
+    </div>
+</header>
+
+<main id="contenido">
+    <div class="container">
+
+        <div class="section-head">
+            <p class="eyebrow">Datos del experimento</p>
+            <h1>Resultados de usabilidad</h1>
+            <p class="lead">
+                Métricas calculadas en el navegador a partir de las pruebas registradas por las aplicaciones.
+                No hay valores de relleno: si todavía no hay datos, la página lo dice y no inventa conclusiones.
+            </p>
+        </div>
+
+        <div class="alert" id="banner-modo" role="status">
+            <span class="badge badge-neutral" id="badge-modo">Sin datos</span>
+            <span id="modo-detalle">Todavía no hay resultados. Sigue las instrucciones para realizar las pruebas.</span>
+        </div>
+
+        <div class="alert alert-demo" id="alerta-demo" hidden>
+            <h3>Datos ficticios de demostración</h3>
+            <p>
+                Estás viendo el conjunto de ejemplo incluido para probar la página. Los códigos empiezan por
+                <code>EJEMPLO-</code> y <strong>no son resultados de participantes reales</strong>. No los cites en la
+                memoria ni los presentes como evidencia del experimento.
+            </p>
+            <a class="btn btn-secondary btn-sm" href="resultados.html">Salir de la demo</a>
+        </div>
+
+        <div class="toolbar mb-2 no-print">
+            <button class="btn btn-primary" id="btn-actualizar" type="button">Actualizar datos</button>
+            <button class="btn btn-secondary" id="btn-exportar" type="button" disabled>Exportar CSV</button>
+            <button class="btn btn-secondary" id="btn-exportar-json" type="button" disabled>Exportar JSON</button>
+            <button class="btn btn-secondary" id="btn-imprimir" type="button" disabled>Imprimir / PDF</button>
+            <span class="spacer"></span>
+            <button class="btn btn-ghost" id="btn-demo" type="button">Ver datos de ejemplo</button>
+            <button class="btn btn-ghost" id="btn-salir-demo" type="button" hidden>Salir de la demo</button>
+            <button class="btn btn-ghost" id="btn-limpiar-importadas" type="button" hidden>Borrar importadas</button>
+        </div>
+
+        <div class="alert alert-info" id="banner-filtro" hidden>
+            <p class="mb-1" id="filtro-texto"></p>
+            <button class="btn btn-secondary btn-sm" id="btn-quitar-filtro" type="button">Quitar filtro</button>
+        </div>
+
+        <p class="small muted" id="resumen-muestra" hidden></p>
+        <p class="small muted" id="resumen-fechas"></p>
+        <p class="small muted">
+            Origen de los datos: <strong id="resumen-modo">—</strong>
+        </p>
+
+        <p id="cargando" class="alert alert-info no-print" role="status">Cargando resultados…</p>
+
+        <section class="empty-state" id="sin-datos" hidden aria-labelledby="sin-datos-titulo">
+            <div class="empty-icon" aria-hidden="true">∅</div>
+            <h2 id="sin-datos-titulo">Todavía no hay pruebas registradas</h2>
+            <p>
+                Realiza la tarea en las dos aplicaciones JavaFX con tu código anónimo. Cuando las aplicaciones
+                envíen las pruebas al servidor local, esta página se actualizará automáticamente.
+            </p>
+            <div class="toolbar" style="justify-content:center;">
+                <a class="btn btn-primary" href="instrucciones.html">Ver instrucciones</a>
+                <button class="btn btn-secondary" type="button" id="btn-demo-vacio">Ver datos de ejemplo</button>
+            </div>
+            <p class="small muted mt-2 mb-0">
+                Si el servidor no estaba encendido, importa el CSV local generado por las aplicaciones
+                (<code>%USERPROFILE%\.trabajo2-usabilidad\resultados-locales.csv</code>) desde el bloque de
+                importación que aparece al final de esta página.
+            </p>
+        </section>
+
+        <div id="panel-resultados" hidden>
+
+            <section class="section" aria-labelledby="resumen-titulo">
+                <div class="section-head">
+                    <p class="eyebrow">Resumen</p>
+                    <h2 id="resumen-titulo">Indicadores principales</h2>
+                </div>
+                <div class="kpi-grid">
+                    <article class="kpi">
+                        <div class="kpi-label">Participantes</div>
+                        <div class="kpi-value" id="kpi-participantes">—</div>
+                        <p class="kpi-note">Códigos anónimos distintos.</p>
+                    </article>
+                    <article class="kpi">
+                        <div class="kpi-label">Pruebas iniciadas</div>
+                        <div class="kpi-value" id="kpi-pruebas">—</div>
+                        <p class="kpi-note">Incluye completadas, incompletas y abandonadas.</p>
+                    </article>
+                    <article class="kpi accent-a">
+                        <div class="kpi-label">Tiempo medio · A</div>
+                        <div class="kpi-value" id="kpi-tiempo-a">—</div>
+                        <p class="kpi-note">Solo pruebas completadas con éxito.</p>
+                    </article>
+                    <article class="kpi accent-b">
+                        <div class="kpi-label">Tiempo medio · B</div>
+                        <div class="kpi-value" id="kpi-tiempo-b">—</div>
+                        <p class="kpi-note">Solo pruebas completadas con éxito.</p>
+                    </article>
+                    <article class="kpi accent-good">
+                        <div class="kpi-label">Mejora relativa de B</div>
+                        <div class="kpi-value" id="kpi-mejora">—</div>
+                        <p class="kpi-note">(A − B) / A × 100. Un valor negativo significa que B tardó más.</p>
+                    </article>
+                    <article class="kpi accent-a">
+                        <div class="kpi-label">Tasa de éxito · A</div>
+                        <div class="kpi-value" id="kpi-exito-a">—</div>
+                        <p class="kpi-note">Pruebas con éxito sobre pruebas iniciadas.</p>
+                    </article>
+                    <article class="kpi accent-b">
+                        <div class="kpi-label">Tasa de éxito · B</div>
+                        <div class="kpi-value" id="kpi-exito-b">—</div>
+                        <p class="kpi-note">Pruebas con éxito sobre pruebas iniciadas.</p>
+                    </article>
+                    <article class="kpi accent-warn">
+                        <div class="kpi-label">Errores por prueba</div>
+                        <div class="kpi-value">
+                            <span id="kpi-errores-a">—</span>
+                            <small> / </small>
+                            <span id="kpi-errores-b">—</span>
+                        </div>
+                        <p class="kpi-note">Media de A / media de B.</p>
+                    </article>
+                </div>
+                <p class="small muted mt-2 mb-0">
+                    Las tasas se calculan sobre todas las pruebas iniciadas. Una prueba abandonada o incompleta
+                    nunca cuenta como éxito. El tiempo medio excluye las pruebas no completadas.
+                </p>
+            </section>
+
+            <section class="section" aria-labelledby="graficos-titulo">
+                <div class="section-head">
+                    <p class="eyebrow">Comparación visual</p>
+                    <h2 id="graficos-titulo">A frente a B</h2>
+                    <p class="small muted">
+                        Cada barra representa la media o la tasa de la versión correspondiente. Los valores
+                        numéricos aparecen junto a la barra para que la información no dependa solo del color.
+                    </p>
+                </div>
+                <div class="chart-grid">
+                    <article class="chart-card">
+                        <h3>Tiempo medio de búsqueda</h3>
+                        <p class="chart-sub">Segundos hasta completar la tarea con éxito (menos es mejor).</p>
+                        <div class="chart" id="chart-tiempo"></div>
+                    </article>
+                    <article class="chart-card">
+                        <h3>Tasa de éxito</h3>
+                        <p class="chart-sub">Porcentaje de pruebas iniciadas que terminaron correctamente (más es mejor).</p>
+                        <div class="chart" id="chart-exito"></div>
+                    </article>
+                    <article class="chart-card">
+                        <h3>Errores por prueba</h3>
+                        <p class="chart-sub">Media de búsquedas incorrectas e intentos inválidos (menos es mejor).</p>
+                        <div class="chart" id="chart-errores"></div>
+                    </article>
+                    <article class="chart-card">
+                        <h3>Índice de eficiencia</h3>
+                        <p class="chart-sub">(tasa de éxito / 100) / tiempo medio × 100 (más es mejor).</p>
+                        <div class="chart" id="chart-eficiencia"></div>
+                    </article>
+                </div>
+                <div class="chart-legend" aria-hidden="true">
+                    <span class="legend-item"><span class="legend-swatch bar-a"></span> Versión A · Básica</span>
+                    <span class="legend-item"><span class="legend-swatch bar-b"></span> Versión B · Mejorada</span>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="comparativa-titulo">
+                <div class="section-head">
+                    <p class="eyebrow">Detalle numérico</p>
+                    <h2 id="comparativa-titulo">Tabla comparativa</h2>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table" id="tabla-comparativa">
+                        <caption>Métricas de usabilidad por versión. La columna de diferencia muestra B − A.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Métrica</th>
+                                <th scope="col">Versión A</th>
+                                <th scope="col">Versión B</th>
+                                <th scope="col">Diferencia (B − A)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <p class="small muted mt-2 mb-0" id="comparativa-nota"></p>
+
+                <div class="mt-3" id="bloque-orden" hidden>
+                    <h3>Efecto del orden de las pruebas</h3>
+                    <p class="small muted">
+                        El orden se asigna de forma equilibrada. Comparar los dos grupos ayuda a detectar si el
+                        aprendizaje o la fatiga influyen en los resultados.
+                    </p>
+                    <div class="table-wrap">
+                        <table class="data-table" id="tabla-orden">
+                            <caption>Tiempo medio de cada versión según el orden asignado.</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Orden</th>
+                                    <th scope="col">Participantes</th>
+                                    <th scope="col">Pruebas</th>
+                                    <th scope="col">Tiempo medio A</th>
+                                    <th scope="col">Tiempo medio B</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="conclusiones-titulo">
+                <div class="section-head">
+                    <p class="eyebrow">Lectura de los datos</p>
+                    <h2 id="conclusiones-titulo">Conclusiones automáticas</h2>
+                    <p class="small muted">
+                        Se generan a partir de los datos disponibles. Si la muestra es pequeña o falta una versión,
+                        se indica expresamente en lugar de afirmar que una interfaz es mejor.
+                    </p>
+                </div>
+                <div class="card">
+                    <ul id="conclusiones" class="mb-0"></ul>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="individual-titulo">
+                <div class="section-head">
+                    <p class="eyebrow">Trazabilidad</p>
+                    <h2 id="individual-titulo">Pruebas individuales</h2>
+                    <p class="small muted" id="tabla-individual-count"></p>
+                </div>
+                <div class="table-wrap table-scroll-lg">
+                    <table class="data-table" id="tabla-individual">
+                        <caption>Registro anónimo de cada prueba. Las fechas se muestran en formato local.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Participante</th>
+                                <th scope="col">Versión</th>
+                                <th scope="col">Orden</th>
+                                <th scope="col">Tarea</th>
+                                <th scope="col">Éxito</th>
+                                <th scope="col">Duración</th>
+                                <th scope="col">Errores</th>
+                                <th scope="col">Búsquedas</th>
+                                <th scope="col">1.er error</th>
+                                <th scope="col">Recuperación</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+        <hr class="divider">
+
+        <section class="section no-print" aria-labelledby="importar-titulo">
+            <div class="section-head">
+                <p class="eyebrow">Recuperar datos</p>
+                <h2 id="importar-titulo">Importar resultados en CSV</h2>
+                <p>
+                    Si el servidor no estaba encendido durante la prueba, cada aplicación guarda un CSV local.
+                    Importa ese archivo aquí para calcular las métricas o, si el servidor está disponible, envíalo
+                    para que se una a los datos de la clase.
+                </p>
+            </div>
+            <div class="card">
+                <div class="field">
+                    <label for="archivo-csv">Archivo CSV de resultados</label>
+                    <input id="archivo-csv" type="file" accept=".csv,text/csv">
+                    <span class="hint">
+                        Se aceptan el CSV exportado por esta página, el generado por las aplicaciones y el archivo
+                        de ejemplo. La primera fila debe contener las cabeceras.
+                    </span>
+                </div>
+                <label class="checkbox mb-2">
+                    <input id="importar-subir" type="checkbox" checked>
+                    <span>Si el servidor está disponible, subir también las pruebas para compartirlas con la clase.</span>
+                </label>
+                <p class="small mb-0" id="import-resultado" role="status" hidden></p>
+            </div>
+        </section>
+
+        <section class="section no-print" aria-labelledby="conexion-titulo">
+            <div class="section-head">
+                <p class="eyebrow">Configuración</p>
+                <h2 id="conexion-titulo">Conexión con el servidor</h2>
+                <p class="small">
+                    Solo es necesario si el servidor se ejecuta en otro equipo o puerto. La dirección vacía
+                    significa «mismo origen». Los cambios se guardan en este navegador.
+                </p>
+            </div>
+            <form data-api-settings class="card">
+                <div class="field">
+                    <label for="api-base">Dirección del servidor de métricas</label>
+                    <input id="api-base" name="apiBase" type="url" placeholder="http://localhost:8080" autocomplete="off">
+                    <span class="hint">Ejemplo: <code>http://192.168.1.40:8080</code>.</span>
+                </div>
+                <div class="toolbar">
+                    <button class="btn btn-secondary" type="button" data-api-test>Probar conexión</button>
+                    <button class="btn btn-primary" type="button" data-api-save>Guardar dirección</button>
+                    <button class="btn btn-ghost" type="button" data-api-local>Usar localhost:8080</button>
+                </div>
+                <p class="small mt-2 mb-0" data-api-result role="status"></p>
+            </form>
+        </section>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>
+            <strong>Trabajo 2 · Usabilidad y métricas</strong><br>
+            Proyecto académico de Desarrollo de Interfaces (DAM). Datos anónimos y uso exclusivamente educativo.
+        </p>
+        <p>
+            <a href="index.html">Inicio</a> ·
+            <a href="instrucciones.html">Instrucciones</a> ·
+            <span id="anio"></span>
+        </p>
+    </div>
+</footer>
+</body>
+</html>
